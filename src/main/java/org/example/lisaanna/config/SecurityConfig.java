@@ -53,24 +53,15 @@ public class SecurityConfig {
                 "/v3/api-docs.yaml"
         ).permitAll());
 
-        /*http.authorizeHttpRequests(auth -> auth
+        http.authorizeHttpRequests(auth -> auth
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN"));*/
+                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN"));
 
         // alla andra requests kräver autentisering
         http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
 
         // aktiverar JWT-stöd
         http.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())));
-
-        /*http
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/public/**").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin(Customizer.withDefaults());*/
 
         return http.build();
     }
@@ -130,7 +121,7 @@ public class SecurityConfig {
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
-        converter.setAuthorityPrefix("ROLE_");
+        converter.setAuthorityPrefix("");
         converter.setAuthoritiesClaimName("scope");
 
         JwtAuthenticationConverter authenticationConverter = new JwtAuthenticationConverter();
