@@ -1,24 +1,19 @@
 package org.example.lisaanna.web;
 
-import jakarta.validation.Valid;
-import org.example.lisaanna.entity.AppUser;
 import org.example.lisaanna.repository.AppUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class AppUserController {
+public class WelcomeController {
 
     private AppUserRepository appUserRepository;
     private PasswordEncoder passwordEncoder;
 
-    public AppUserController(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
+    public WelcomeController(AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
         this.appUserRepository = appUserRepository;
         this.passwordEncoder = passwordEncoder;
     }
