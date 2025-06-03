@@ -53,6 +53,10 @@ public class SecurityConfig {
                 "/v3/api-docs.yaml"
         ).permitAll());
 
+        /*http.authorizeHttpRequests(auth -> auth
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                .requestMatchers("/user/**").hasAnyRole("USER", "ADMIN"));*/
+
         // alla andra requests kräver autentisering
         http.authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
 
