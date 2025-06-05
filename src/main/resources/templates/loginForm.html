@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+</head>
+<body>
+<form th:action="@{/addUser}" th:object="${appUser}" method="post">
+    <input type="text" th:field="*{username}" placeholder="Username" />
+    <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+    <input type="text" th:field="*{password}" placeholder="Password" />
+    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    <input type="text" th:field="*{role}" placeholder="Role" />
+    <div th:if="${#fields.hasErrors('role')}" th:errors="*{role}"></div>
+    <label>
+        <input type="checkbox" th:field="*{consentGiven}" />
+        Do you consent to GDPR?
+    </label>
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>
