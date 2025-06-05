@@ -24,5 +24,4 @@ public class AppUserMapper {
         return dto;
     }
 
-
 }

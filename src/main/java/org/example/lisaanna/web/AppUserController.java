@@ -21,87 +21,49 @@ public class AppUserController {
     }
 
     @GetMapping
-    public String getUserPage(){
+    public String getUserPage() {
         return "user";
-    }
-
-    @GetMapping()
-    public String getUsers(Model model){
-        List<AppUser> appUserList = appUserService.getAppUserList();
-        model.addAttribute("appUserList", appUserList);
-        return "userlist";
-    }
-
-    @GetMapping("/{username}")
-    public String getUserByUsername(@PathVariable String username, Model model){
-        AppUser appUser = appUserService.getAppUserByUsername(username);
-        model.addAttribute("appUser", appUser);
-        return "user";
-    }
-
-    @PostMapping
-    public ResponseEntity<AppUser> addUser(@Valid @RequestBody AppUser appUser){
-        return ResponseEntity.status(HttpStatus.CREATED).body(appUser);
-    }
-
-/*    private final MovieService movieService;
-
-    public MovieController(MovieService movieService) {
-        this.movieService = movieService;
     }
 
     @GetMapping
-    public ResponseEntity<List<Movie>> getAllMovies() {
-        return ResponseEntity.ok(movieService.getAllMovies());
+    public ResponseEntity<List<AppUser>> getAllUsers() {
+        return ResponseEntity.ok(appUserService.getAppUserList());
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Movie> getMovieById(@PathVariable int id) {
-        if (id > 0 && id < MovieService.movieList.size()) {
-            return ResponseEntity.ok(movieService.getMovieByID(id));
-        } else {
+    @GetMapping("/{username}")
+    public ResponseEntity<AppUser> getUserByUsername(@PathVariable String username) {
+        if (appUserService.getAppUserByUsername(username) == null) {
             return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(appUserService.getAppUserByUsername(username));
         }
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<Movie>> getMovieByTitle(@RequestParam String title) {
-        List<Movie> movieList = movieService.getMovieByTitle(title);
-        if (!movieList.isEmpty()) {
-            return ResponseEntity.ok(movieList);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
-
+    ///  ////// Kolla av mot databasen om en användare med samma namn redan finns
     @PostMapping
-    public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
-        if (movie.getTitle() == null || movie.getTitle().isEmpty()) {
-            return ResponseEntity.badRequest().build();
-        } else {
-            movieService.addMovie(movie);
-            return ResponseEntity.status(HttpStatus.CREATED).body(movie);
-        }
+    public ResponseEntity<AppUser> addUser(@Valid @RequestBody AppUser appUser) {
+        //appUserService.saveUser(appUser);
+        return ResponseEntity.status(HttpStatus.CREATED).body(appUser);
     }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<Movie> updateMovie(@PathVariable int id, @RequestBody Movie movie) {
-        if (id > 0 && id < MovieService.movieList.size()) {
-            movieService.updateMovie(id, movie);
-            return ResponseEntity.ok(movie);
-        } else {
-            return ResponseEntity.notFound().build();
+    /*      @PostMapping
+        public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
+            if (movie.getTitle() == null || movie.getTitle().isEmpty()) {
+                return ResponseEntity.badRequest().build();
+            } else {
+                movieService.addMovie(movie);
+                return ResponseEntity.status(HttpStatus.CREATED).body(movie);
+            }
         }
-    }
+        */
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Movie> deleteMovie(@PathVariable int id) {
-        if (id >= 0 && id < MovieService.movieList.size()) {
-            movieService.deleteMovie(id);
+    public ResponseEntity<AppUser> deleteUser(@PathVariable Long id) {
+        if (id >= 0 && id < appUserService.getAppUserList().size()) {
+            //appUserService.deleteUser();
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.badRequest().build();
         }
-    }*/
+    }
 
 }

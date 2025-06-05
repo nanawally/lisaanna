@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-
 // mappar nu till /login -> ska mappa till loginForm eller loginResult???????
 @RestController
 @RequestMapping("/login")
