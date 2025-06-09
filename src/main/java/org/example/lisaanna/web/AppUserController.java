@@ -19,11 +19,13 @@ public class AppUserController {
     public AppUserController(AppUserService appUserService) {
         this.appUserService = appUserService;
     }
-
+/*
     @GetMapping
     public String getUserPage() {
         return "user";
     }
+
+ */
 
     @GetMapping
     public ResponseEntity<List<AppUser>> getAllUsers() {
@@ -41,29 +43,25 @@ public class AppUserController {
 
     ///  ////// Kolla av mot databasen om en användare med samma namn redan finns
     @PostMapping
-    public ResponseEntity<AppUser> addUser(@Valid @RequestBody AppUser appUser) {
-        //appUserService.saveUser(appUser);
-        return ResponseEntity.status(HttpStatus.CREATED).body(appUser);
-    }
-    /*      @PostMapping
-        public ResponseEntity<Movie> addMovie(@RequestBody Movie movie) {
-            if (movie.getTitle() == null || movie.getTitle().isEmpty()) {
-                return ResponseEntity.badRequest().build();
-            } else {
-                movieService.addMovie(movie);
-                return ResponseEntity.status(HttpStatus.CREATED).body(movie);
-            }
+    public ResponseEntity<AppUserDTO> addUser(@Valid @RequestBody AppUserDTO appUserDTO) {
+        if (appUserService.getAppUserByUsername(appUserDTO.getUsername()) != null) {
+            return ResponseEntity.badRequest().build();
         }
-        */
+        appUserService.saveUser(appUserDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(appUserDTO);
+    }
 
+    /*
     @DeleteMapping("/{id}")
-    public ResponseEntity<AppUser> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<AppUserDTO> deleteUser(@PathVariable AppUserDTO appUserDTO) {
         if (id >= 0 && id < appUserService.getAppUserList().size()) {
-            //appUserService.deleteUser();
+            appUserService.deleteUser();
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.badRequest().build();
         }
     }
+
+     */
 
 }
