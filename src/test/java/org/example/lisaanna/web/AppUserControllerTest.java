@@ -5,7 +5,6 @@ import org.example.lisaanna.entity.AppUser;
 import org.example.lisaanna.repository.AppUserRepository;
 import org.example.lisaanna.service.AppUserService;
 import org.example.lisaanna.service.TokenService;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
