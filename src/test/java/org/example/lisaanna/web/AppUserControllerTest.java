@@ -5,6 +5,7 @@ import org.example.lisaanna.entity.AppUser;
 import org.example.lisaanna.repository.AppUserRepository;
 import org.example.lisaanna.service.AppUserService;
 import org.example.lisaanna.service.TokenService;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -46,6 +47,8 @@ public class AppUserControllerTest {
 
     @BeforeEach
     public void setup() {
+
+
         Authentication auth = new UsernamePasswordAuthenticationToken(
                 "admin",
                 null,
@@ -53,15 +56,16 @@ public class AppUserControllerTest {
         );
         token = tokenService.generateToken(auth);
 
-        appUserRepository.deleteAll();
+        // why u fuck it up ?????
+        // appUserRepository.deleteAll();
 
         AppUser user = new AppUser();
+        user.setId(1L);
         user.setUsername("testuser");
         user.setPassword(securityConfig.passwordEncoder().encode("passwordAAA123!!!"));
         user.setRole("ADMIN");
         appUserRepository.save(user);
     }
-
 
     @Test
     @WithMockUser(username = "user", roles = {"ADMIN"})
@@ -88,14 +92,13 @@ public class AppUserControllerTest {
     @WithMockUser(username = "user", roles = {"ADMIN"})
     public void testDeleteUser() throws Exception {
         AppUser user = appUserRepository.findByUsername("testuser");
+        System.out.println(appUserRepository.findAll().size());
 
-        Mockito.when(appUserService.getAppUserList()).thenReturn(List.of(user));
-        Mockito.doNothing().when(appUserService).deleteUser(user.getId());
+        //Mockito.when(appUserService.getAppUserList()).thenReturn(List.of(user));
+        //Mockito.doNothing().when(appUserService).deleteUser(user.getId());
 
         mockMvc.perform(delete("/user/" + user.getId())
-                        .header("Authorization", "Bearer " + token)
-                        .with(csrf()))
+                        .header("Authorization", "Bearer " + token))
                 .andExpect(status().isNoContent());
     }
-
 }

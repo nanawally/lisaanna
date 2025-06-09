@@ -2,6 +2,7 @@ package org.example.lisaanna.service;
 
 import org.example.lisaanna.component.AppUserMapper;
 import org.example.lisaanna.entity.AppUser;
+import org.example.lisaanna.exception.UserNotFoundException;
 import org.example.lisaanna.repository.AppUserRepository;
 import org.example.lisaanna.web.AppUserDTO;
 import org.slf4j.Logger;
@@ -17,6 +18,7 @@ public class AppUserService {
     private final AppUserMapper appUserMapper;
 
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
+
     public void run() {
         logger.info("Startar uppgift");
         try {
@@ -33,20 +35,21 @@ public class AppUserService {
         this.appUserMapper = appUserMapper;
     }
 
-    public List<AppUser> getAppUserList(){
+    public List<AppUser> getAppUserList() {
         return appUserRepository.findAll();
     }
 
-    public AppUser getAppUserByUsername(String username){
+    public AppUser getAppUserByUsername(String username) {
         return appUserRepository.findByUsername(username);
     }
 
-    public void saveUser(AppUserDTO appUserDTO){
+    public void saveUser(AppUserDTO appUserDTO) {
         AppUser appUser = appUserMapper.toAppUser(appUserDTO);
         appUserRepository.save(appUser);
     }
 
-    public void deleteUser(Long id){
+    public void deleteUser(Long id) {
+        AppUser user = appUserRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No user with " + id + " found"));
         appUserRepository.deleteById(id);
     }
 

@@ -54,11 +54,7 @@ public class AppUserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        if (id >= 0 && id < appUserService.getAppUserList().size()) {
-            appUserService.deleteUser(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            throw new UserNotFoundException("User not found");
-        }
+        appUserService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
