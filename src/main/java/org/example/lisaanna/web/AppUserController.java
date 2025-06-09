@@ -42,7 +42,6 @@ public class AppUserController {
         }
     }
 
-    ///  ////// Kolla av mot databasen om en användare med samma namn redan finns
     @PostMapping
     public ResponseEntity<AppUserDTO> addUser(@Valid @RequestBody AppUserDTO appUserDTO) {
         if (appUserService.getAppUserByUsername(appUserDTO.getUsername()) != null) {
@@ -62,7 +61,4 @@ public class AppUserController {
             throw new UserNotFoundException("User not found");
         }
     }
-
-
-
 }
