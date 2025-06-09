@@ -2,6 +2,7 @@ package org.example.lisaanna.web;
 
 import jakarta.validation.Valid;
 import org.example.lisaanna.entity.AppUser;
+import org.example.lisaanna.exception.UserNotFoundException;
 import org.example.lisaanna.service.AppUserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -51,17 +52,17 @@ public class AppUserController {
         return ResponseEntity.status(HttpStatus.CREATED).body(appUserDTO);
     }
 
-    /*
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<AppUserDTO> deleteUser(@PathVariable AppUserDTO appUserDTO) {
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         if (id >= 0 && id < appUserService.getAppUserList().size()) {
-            appUserService.deleteUser();
+            appUserService.deleteUser(id);
             return ResponseEntity.noContent().build();
         } else {
-            return ResponseEntity.badRequest().build();
+            throw new UserNotFoundException("User not found");
         }
     }
 
-     */
+
 
 }

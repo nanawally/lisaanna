@@ -46,9 +46,8 @@ public class AppUserService {
         appUserRepository.save(appUser);
     }
 
-    public void deleteUser(AppUserDTO appUserDTO){
-        AppUser appUser = appUserMapper.toAppUser(appUserDTO);
-        appUserRepository.delete(appUser);
+    public void deleteUser(Long id){
+        appUserRepository.deleteById(id);
     }
 
 }

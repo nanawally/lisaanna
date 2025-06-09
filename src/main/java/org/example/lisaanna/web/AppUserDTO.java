@@ -11,7 +11,7 @@ public class AppUserDTO {
             message = "Password must be minimum 8 characters, include at least 1 capital letter, 2 numbers, and 2 special characters (!@#$%&*)")
     private String password;
     @Pattern(
-            regexp = "^(admin|user|public)$",
+            regexp = "^(ADMIN|USER|PUBLIC)$",
             message = "Role must be one of: admin, user, or public"
     )
     private String role;
