@@ -165,6 +165,9 @@ public class SecurityConfig {
         return authenticationConverter;
     }
 
+    /**
+     * @return
+     */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
