@@ -1,3 +1,4 @@
+/*
 package org.example.lisaanna.web;
 
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
  *
  */
 // mappar nu till /login -> ska mappa till loginForm eller loginResult???????
+/*
 @Controller
 @RequestMapping("/login")
 public class LoginController {
@@ -19,6 +21,7 @@ public class LoginController {
      * @param model
      * @return
      */
+/*
     @GetMapping()
     public String showForm(Model model) {
         model.addAttribute("appUser", new AppUser());
@@ -30,6 +33,7 @@ public class LoginController {
      * @param bindingResult
      * @return
      */
+/*
     @PostMapping()
     public String handleForm(@Valid @ModelAttribute AppUser appUser, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -38,3 +42,4 @@ public class LoginController {
         return "loginResult";
     }
 }
+*/

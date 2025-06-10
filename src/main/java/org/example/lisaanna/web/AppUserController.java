@@ -23,13 +23,6 @@ public class AppUserController {
     public AppUserController(AppUserService appUserService) {
         this.appUserService = appUserService;
     }
-/*
-    @GetMapping
-    public String getUserPage() {
-        return "user";
-    }
-
- */
 
     /**
      * @return
