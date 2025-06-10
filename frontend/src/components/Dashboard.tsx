@@ -8,7 +8,13 @@ const Dashboard = () => {
         navigate("/");
     };
 
-    return <button onClick={handleLogout}>Logga ut</button>
+    return (
+        <>
+            <a href="/registeruser">Registrera användare</a>
+            <button onClick={handleLogout}>Logga ut</button>
+        </>
+
+    )
 };
 
 export default Dashboard;

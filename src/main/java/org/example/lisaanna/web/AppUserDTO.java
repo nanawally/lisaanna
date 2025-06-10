@@ -1,5 +1,6 @@
 package org.example.lisaanna.web;
 
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
@@ -18,6 +19,7 @@ public class AppUserDTO {
             message = "Role must be one of: admin, user, or public"
     )
     private String role;
+    @AssertTrue(message = "Consent must be given")
     private boolean consentGiven;
 
     public AppUserDTO() {

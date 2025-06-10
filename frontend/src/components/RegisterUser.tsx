@@ -1,0 +1,96 @@
+import {useForm} from "react-hook-form";
+import {useState} from "react";
+
+type UserFormValues = {
+    username: string;
+    password: string;
+    role: string;
+    consentGiven: boolean;
+};
+
+
+const RegisterUser = () => {
+    const {
+        register,
+        handleSubmit,
+        formState: {errors},
+        reset,
+    } = useForm<UserFormValues>({
+        defaultValues: {
+            consentGiven: false
+        }
+    });
+
+    const [message, setMessage] = useState("");
+
+    const handleRegisterUser = async (data: UserFormValues) => {
+        if (!data.consentGiven) {
+            setMessage("You have to consent to GDPR");
+            return;
+        }
+
+        const token = localStorage.getItem("token");
+        if (!token) {
+            setMessage("Ingen giltig token hittades");
+            return;
+        }
+        try {
+            const response = await fetch("http://localhost:8080/user",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                }
+            );
+            if (!response.ok) {
+                throw new Error("Kunde inte registrera användaren.");
+            }
+            setMessage("Användaren har registrerats.");
+            reset();
+        } catch (err) {
+            if (err instanceof Error) {
+                console.log("Här fastnar vi")
+                setMessage(err.message);
+            }
+        }
+    }
+
+    return (
+        <>
+            {
+                message && <div>
+                    {message}
+                </div>
+            }
+            <form onSubmit={handleSubmit(handleRegisterUser)}>
+                <div>
+                    <input type="text"
+                           placeholder="Username" {...register("username", {required: "Användarnamn är obligatorisk"})}/>
+                    {errors.username && <p>{errors.username.message}</p>}
+                </div>
+                <div>
+                    <input type="password"
+                           placeholder="Password" {...register("password", {required: "Lösenord är obligatorisk"})}/>
+                    {errors.password && <p>{errors.password.message}</p>}
+                </div>
+                <div>
+                    <input type="text"
+                           placeholder="Role" {...register("role", {required: "Roll är obligatorisk"})}/>
+                    {errors.role && <p>{errors.role.message}</p>}
+                </div>
+                <div>
+                    <input type="checkbox" id="consentGiven" {...register("consentGiven")} />
+                    <label htmlFor="consentGiven">Godkänner du GDPR?</label>
+                    {errors.consentGiven && <p>{errors.consentGiven.message}</p>}
+                </div>
+                <button type="submit">Registrera användare</button>
+            </form>
+        </>
+    );
+
+}
+
+export default RegisterUser;
