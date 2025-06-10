@@ -22,6 +22,8 @@ import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -161,5 +163,19 @@ public class SecurityConfig {
         JwtAuthenticationConverter authenticationConverter = new JwtAuthenticationConverter();
         authenticationConverter.setJwtGrantedAuthoritiesConverter(converter);
         return authenticationConverter;
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**") // Tillåter alla endpoints
+                        .allowedOrigins("http://localhost:5173") // Anpassa efter frontendens URL
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Tillåtna HTTP-metoder
+                        .allowedHeaders("*") // Tillåter alla headers
+                        .allowCredentials(true);
+            }
+        };
     }
 }
