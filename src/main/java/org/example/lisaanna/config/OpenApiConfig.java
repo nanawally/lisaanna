@@ -6,6 +6,9 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.security.SecurityScheme;
 
+/**
+ *
+ */
 @OpenAPIDefinition(
         info = @Info(title = "API med JWT", version = "1.0"),
         security = @SecurityRequirement(name = "bearerAuth")

@@ -3,6 +3,9 @@ package org.example.lisaanna.web;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
+/**
+ *
+ */
 public class AppUserDTO {
 
     @NotBlank(message = "Username cannot be blank")
@@ -17,7 +20,8 @@ public class AppUserDTO {
     private String role;
     private boolean consentGiven;
 
-    public AppUserDTO() {}
+    public AppUserDTO() {
+    }
 
     public String getUsername() {
         return username;

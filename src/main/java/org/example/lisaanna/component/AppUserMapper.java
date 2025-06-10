@@ -5,6 +5,9 @@ import org.example.lisaanna.entity.AppUser;
 import org.example.lisaanna.web.AppUserDTO;
 import org.springframework.stereotype.Component;
 
+/**
+ *
+ */
 @Component
 public class AppUserMapper {
 
@@ -14,6 +17,10 @@ public class AppUserMapper {
         this.securityConfig = securityConfig;
     }
 
+    /**
+     * @param dto
+     * @return
+     */
     public AppUser toAppUser(AppUserDTO dto) {
         AppUser user = new AppUser();
         user.setUsername(dto.getUsername());
@@ -23,6 +30,10 @@ public class AppUserMapper {
         return user;
     }
 
+    /**
+     * @param user
+     * @return
+     */
     public AppUserDTO toAppUserDTO(AppUser user) {
         AppUserDTO dto = new AppUserDTO();
         dto.setUsername(user.getUsername());

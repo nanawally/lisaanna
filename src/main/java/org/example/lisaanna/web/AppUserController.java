@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ *
+ */
 @RestController
 @RequestMapping("/user")
 public class AppUserController {
@@ -28,11 +31,18 @@ public class AppUserController {
 
  */
 
+    /**
+     * @return
+     */
     @GetMapping
     public ResponseEntity<List<AppUser>> getAllUsers() {
         return ResponseEntity.ok(appUserService.getAppUserList());
     }
 
+    /**
+     * @param username
+     * @return
+     */
     @GetMapping("/{username}")
     public ResponseEntity<AppUser> getUserByUsername(@PathVariable String username) {
         if (appUserService.getAppUserByUsername(username) == null) {
@@ -42,6 +52,10 @@ public class AppUserController {
         }
     }
 
+    /**
+     * @param appUserDTO
+     * @return
+     */
     @PostMapping
     public ResponseEntity<AppUserDTO> addUser(@Valid @RequestBody AppUserDTO appUserDTO) {
         if (appUserService.getAppUserByUsername(appUserDTO.getUsername()) != null) {
@@ -52,6 +66,10 @@ public class AppUserController {
     }
 
 
+    /**
+     * @param id
+     * @return
+     */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         appUserService.deleteUser(id);

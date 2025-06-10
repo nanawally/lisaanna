@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ *
+ */
 @Service
 public class AppUserService {
 
@@ -19,6 +22,9 @@ public class AppUserService {
 
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
+    /**
+     *
+     */
     public void run() {
         logger.info("Startar uppgift");
         try {
@@ -35,19 +41,32 @@ public class AppUserService {
         this.appUserMapper = appUserMapper;
     }
 
+    /**
+     * @return
+     */
     public List<AppUser> getAppUserList() {
         return appUserRepository.findAll();
     }
 
+    /**
+     * @param username
+     * @return
+     */
     public AppUser getAppUserByUsername(String username) {
         return appUserRepository.findByUsername(username);
     }
 
+    /**
+     * @param appUserDTO
+     */
     public void saveUser(AppUserDTO appUserDTO) {
         AppUser appUser = appUserMapper.toAppUser(appUserDTO);
         appUserRepository.save(appUser);
     }
 
+    /**
+     * @param id
+     */
     public void deleteUser(Long id) {
         AppUser user = appUserRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No user with " + id + " found"));
         appUserRepository.deleteById(id);

@@ -25,6 +25,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
+/**
+ *
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AppUserControllerTest {
@@ -44,6 +47,9 @@ public class AppUserControllerTest {
     private AppUserService appUserService;
 
 
+    /**
+     *
+     */
     @BeforeEach
     public void setup() {
 
@@ -66,6 +72,9 @@ public class AppUserControllerTest {
         appUserRepository.save(user);
     }
 
+    /**
+     * @throws Exception
+     */
     @Test
     @WithMockUser(username = "user", roles = {"ADMIN"})
     public void testAddUser() throws Exception {
@@ -87,6 +96,9 @@ public class AppUserControllerTest {
                 .andExpect(status().isCreated());
     }
 
+    /**
+     * @throws Exception
+     */
     @Test
     @WithMockUser(username = "user", roles = {"ADMIN"})
     public void testDeleteUser() throws Exception {

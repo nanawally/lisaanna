@@ -10,9 +10,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ *
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 public class AuthControllerTest {
@@ -26,6 +30,9 @@ public class AuthControllerTest {
     @Autowired
     private SecurityConfig securityConfig;
 
+    /**
+     *
+     */
     @BeforeEach
     public void setup() {
         appUserRepository.deleteAll();
@@ -37,6 +44,9 @@ public class AuthControllerTest {
         appUserRepository.save(user);
     }
 
+    /**
+     * @throws Exception
+     */
     @Test
     public void testLoginAuthenticationToken() throws Exception {
         String loginJson = """

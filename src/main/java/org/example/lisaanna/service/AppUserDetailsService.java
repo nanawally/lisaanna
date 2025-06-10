@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 @Service
 public class AppUserDetailsService implements UserDetailsService {
 
@@ -24,6 +27,11 @@ public class AppUserDetailsService implements UserDetailsService {
         this.loggingComponent = loggingComponent;
     }
 
+    /**
+     * @param username
+     * @return
+     * @throws UsernameNotFoundException
+     */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         AppUser appUser = appUserRepository.findByUsername(username);

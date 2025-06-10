@@ -11,6 +11,9 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
+/**
+ *
+ */
 @Service
 public class TokenService {
 
@@ -26,6 +29,10 @@ public class TokenService {
         this.jwtEncoder = jwtEncoder;
     }
 
+    /**
+     * @param auth
+     * @return
+     */
     public String generateToken(Authentication auth) {
         // referenspunkt för när token skapas
         Instant now = Instant.now();

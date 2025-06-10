@@ -6,6 +6,9 @@ import org.example.lisaanna.repository.AppUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+/**
+ *
+ */
 @Component
 public class PostConstructInit {
 
@@ -17,6 +20,9 @@ public class PostConstructInit {
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     *
+     */
     @PostConstruct
     public void init(){
         if (appUserRepository.findByUsername("user") == null) {

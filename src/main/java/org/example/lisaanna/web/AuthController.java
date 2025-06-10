@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ *
+ */
 @RestController
 @RequestMapping("/request-token")
 public class AuthController {
@@ -22,6 +25,10 @@ public class AuthController {
         this.tokenService = tokenService;
     }
 
+    /**
+     * @param loginRequest
+     * @return
+     */
     @PostMapping
     public ResponseEntity<String> token(@RequestBody LoginRequest loginRequest) {
         Authentication auth = authenticationManager.authenticate(

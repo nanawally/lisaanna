@@ -30,10 +30,18 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
 
+/**
+ *
+ */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * @param http
+     * @return
+     * @throws Exception
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         // slå av csrf
@@ -65,11 +73,18 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * @return
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    /**
+     * @return
+     * @throws NoSuchAlgorithmException
+     */
     // genererar ett publikt + privat RSA-nyckelpar
     @Bean
     public KeyPair keyPair() throws NoSuchAlgorithmException {
@@ -78,6 +93,10 @@ public class SecurityConfig {
         return generator.generateKeyPair();
     }
 
+    /**
+     * @param keyPair
+     * @return
+     */
     // bygger JSON Web Kay-format utifrån nyckelparet
     // transformerar nyckelparet till formatet som krävs för att encode jwt-tokens
     @Bean
@@ -90,6 +109,10 @@ public class SecurityConfig {
         return ((jwkSelector, context) -> jwkSelector.select(jwkSet));
     }
 
+    /**
+     * @param jwkSource
+     * @return
+     */
     // signerar en JWT
     // använder JWKSource för att skapa encodern
     @Bean
@@ -97,6 +120,10 @@ public class SecurityConfig {
         return new NimbusJwtEncoder(jwkSource);
     }
 
+    /**
+     * @param keyPair
+     * @return
+     */
     // läser och verifierar en JWT
     // använder KeyPair för att skapa decodern
     @Bean
@@ -104,6 +131,11 @@ public class SecurityConfig {
         return NimbusJwtDecoder.withPublicKey((RSAPublicKey) keyPair.getPublic()).build();
     }
 
+    /**
+     * @param userDetailsService
+     * @param passwordEncoder
+     * @return
+     */
     // autentiserar användare vid inloggning
     @Bean
     public AuthenticationManager authenticationManager(
@@ -116,6 +148,9 @@ public class SecurityConfig {
         return new ProviderManager(provider);
     }
 
+    /**
+     * @return
+     */
     // översätter token:s claims till roller
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
