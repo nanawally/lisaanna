@@ -5,6 +5,7 @@ import LoginPage from "./components/LoginPage.tsx";
 import RegisterUser from "./components/RegisterUser.tsx";
 import Navigation from "./components/Navigation.tsx";
 import "./App.css";
+import UserPage from "./components/UserPage.tsx";
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                     <Route element={<ProtectedRoute/>}>
                         <Route path="/dashboard" element={<Dashboard />}/>
                         <Route path="/registeruser" element={<RegisterUser />}/>
+                        <Route path="/user" element={<UserPage />}/>
                     </Route>
                 </Routes>
             </BrowserRouter>
