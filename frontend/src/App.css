@@ -56,3 +56,18 @@ body {
 label {
   color: #f9f9f9;
 }
+
+nav {
+  background-color: #1a1a1a;
+  padding: 10px;
+}
+
+nav a {
+  color: #f9f9f9;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}

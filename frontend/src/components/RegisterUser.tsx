@@ -59,11 +59,18 @@ const RegisterUser = () => {
 
     return (
         <>
-            {
-                message && <div>
+            {message && (
+                <div style={{
+                    marginBottom: '20px',
+                    padding: '10px',
+                    border: '1px solid green',
+                    borderRadius: '4px',
+                    backgroundColor: '#e0ffe0',
+                    color: 'green'
+                }}>
                     {message}
                 </div>
-            }
+            )}
             <form onSubmit={handleSubmit(handleRegisterUser)}>
                 <div>
                     <input type="text"
