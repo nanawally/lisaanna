@@ -25,13 +25,13 @@ const RegisterUser = () => {
 
     const handleRegisterUser = async (data: UserFormValues) => {
         if (!data.consentGiven) {
-            setMessage("You have to consent to GDPR");
+            setMessage("You must consent to GDPR to continue.");
             return;
         }
 
         const token = localStorage.getItem("token");
         if (!token) {
-            setMessage("Ingen giltig token hittades");
+            setMessage("No valid token found");
             return;
         }
         try {
@@ -46,13 +46,12 @@ const RegisterUser = () => {
                 }
             );
             if (!response.ok) {
-                throw new Error("Kunde inte registrera användaren.");
+                throw new Error("Unable to register user.");
             }
-            setMessage("Användaren har registrerats.");
+            setMessage("User has been registered.");
             reset();
         } catch (err) {
             if (err instanceof Error) {
-                console.log("Här fastnar vi")
                 setMessage(err.message);
             }
         }
@@ -68,25 +67,25 @@ const RegisterUser = () => {
             <form onSubmit={handleSubmit(handleRegisterUser)}>
                 <div>
                     <input type="text"
-                           placeholder="Username" {...register("username", {required: "Användarnamn är obligatorisk"})}/>
+                           placeholder="Username" {...register("username", {required: "Username is mandatory"})}/>
                     {errors.username && <p>{errors.username.message}</p>}
                 </div>
                 <div>
                     <input type="password"
-                           placeholder="Password" {...register("password", {required: "Lösenord är obligatorisk"})}/>
+                           placeholder="Password" {...register("password", {required: "Password is mandatory"})}/>
                     {errors.password && <p>{errors.password.message}</p>}
                 </div>
                 <div>
                     <input type="text"
-                           placeholder="Role" {...register("role", {required: "Roll är obligatorisk"})}/>
+                           placeholder="Role" {...register("role", {required: "Role is mandatory"})}/>
                     {errors.role && <p>{errors.role.message}</p>}
                 </div>
                 <div>
                     <input type="checkbox" id="consentGiven" {...register("consentGiven")} />
-                    <label htmlFor="consentGiven">Godkänner du GDPR?</label>
+                    <label htmlFor="consentGiven">Do you consent to GDPR?</label>
                     {errors.consentGiven && <p>{errors.consentGiven.message}</p>}
                 </div>
-                <button type="submit">Registrera användare</button>
+                <button type="submit">Register user</button>
             </form>
         </>
     );

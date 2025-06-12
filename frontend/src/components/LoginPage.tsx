@@ -19,7 +19,7 @@ const LoginPage = () => {
             );
             //vid felaktig inloggnign
             if (!response.ok) {
-                throw new Error("Felaktiga inloggningsuppgifter!");
+                throw new Error("Login credentials do not match");
             }
             //hämta token från responsen
             const token = await response.text();
@@ -37,9 +37,9 @@ const LoginPage = () => {
 
     return (
         <>
-            <input type="text" placeholder="Användarnamn" onChange={(e) => setUsername(e.target.value)} />
-            <input type="password" placeholder="Lösenord" onChange={(e) => setPassword(e.target.value)} />
-            <button onClick={handleLogin}>Logga in</button>
+            <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+            <input type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+            <button onClick={handleLogin}>Log in</button>
         </>
     );
 };

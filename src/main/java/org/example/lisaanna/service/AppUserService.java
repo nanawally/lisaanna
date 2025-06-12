@@ -26,11 +26,11 @@ public class AppUserService {
      *
      */
     public void run() {
-        logger.info("Startar uppgift");
+        logger.info("Starting logger");
         try {
-            logger.debug("Kör logik...");
+            logger.debug("Running logic...");
         } catch (Exception e) {
-            logger.error("Fel uppstod", e);
+            logger.error("Error occurred", e);
         }
     }
 

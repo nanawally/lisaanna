@@ -10,8 +10,8 @@ const Dashboard = () => {
 
     return (
         <>
-            <a href="/registeruser">Registrera användare</a>
-            <button onClick={handleLogout}>Logga ut</button>
+            <a href="/registeruser">Register user</a>
+            <button onClick={handleLogout}>Log out</button>
         </>
 
     )
