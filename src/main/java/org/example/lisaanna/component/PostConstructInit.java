@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ Den här klassen kör kod direkt efter att Spring har startats upp
  */
 @Component
 public class PostConstructInit {
@@ -21,7 +21,9 @@ public class PostConstructInit {
     }
 
     /**
-     *
+     * Annotationen PostConstruct gör att metoden körs en (1) gång omedelbart efter att beanen
+     * är skapad och dependencies är injicerade - dvs efter att applikationen startats. Metoden
+     * skapar en AppUser som direkt läggs in i databasen.
      */
     @PostConstruct
     public void init(){

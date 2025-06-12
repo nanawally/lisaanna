@@ -6,7 +6,8 @@ import org.example.lisaanna.web.AppUserDTO;
 import org.springframework.stereotype.Component;
 
 /**
- *
+ Mappers ingår i servicelagret i en applikation. I denna klass konverterar vi vår Entity (AppUser)
+ till sitt DTO, eller tvärtom, innan datan sparas eller bearbetas vidare.
  */
 @Component
 public class AppUserMapper {
@@ -18,8 +19,8 @@ public class AppUserMapper {
     }
 
     /**
-     * @param dto
-     * @return
+     * @param dto tas in. Den är en instans av AppUserDTO
+     * @return en AppUser returneras
      */
     public AppUser toAppUser(AppUserDTO dto) {
         AppUser user = new AppUser();
@@ -31,8 +32,8 @@ public class AppUserMapper {
     }
 
     /**
-     * @param user
-     * @return
+     * @param user tas in. Den är en instans av entiteten AppUser
+     * @return en instans av AppUserDTO
      */
     public AppUserDTO toAppUserDTO(AppUser user) {
         AppUserDTO dto = new AppUserDTO();

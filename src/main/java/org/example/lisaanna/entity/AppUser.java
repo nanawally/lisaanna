@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 /**
- *
+ * Entitetsklass; dvs den typen av objekt som läggs in i databasen. I det här fallet användare.
  */
 @Entity
 public class AppUser {
