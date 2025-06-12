@@ -4,6 +4,7 @@ import {BrowserRouter, Route, Routes} from "react-router-dom";
 import LoginPage from "./components/LoginPage.tsx";
 import RegisterUser from "./components/RegisterUser.tsx";
 import Navigation from "./components/Navigation.tsx";
+import "./App.css";
 
 const App = () => {
     return (
@@ -13,8 +14,8 @@ const App = () => {
                 <Routes>
                     <Route path="/" element={<LoginPage/>}/>
                     <Route element={<ProtectedRoute/>}>
-                        <Route path="/dashboard" element={<Dashboard/>}/>
-                        <Route path="/registeruser" element={<RegisterUser/>}/>
+                        <Route path="/dashboard" element={<Dashboard />}/>
+                        <Route path="/registeruser" element={<RegisterUser />}/>
                     </Route>
                 </Routes>
             </BrowserRouter>

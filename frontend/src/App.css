@@ -40,3 +40,19 @@
 .read-the-docs {
   color: #888;
 }
+
+button {
+  color: #f9f9f9;
+  background-color: #1a1a1a;
+}
+
+body {
+  background-image: url("../public/background-main-page.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+label {
+  color: #f9f9f9;
+}
