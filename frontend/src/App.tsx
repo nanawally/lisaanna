@@ -3,11 +3,13 @@ import Dashboard from "./components/Dashboard.tsx";
 import {BrowserRouter, Route, Routes} from "react-router-dom";
 import LoginPage from "./components/LoginPage.tsx";
 import RegisterUser from "./components/RegisterUser.tsx";
+import Navigation from "./components/Navigation.tsx";
 
 const App = () => {
     return (
         <>
             <BrowserRouter>
+                <Navigation />
                 <Routes>
                     <Route path="/" element={<LoginPage/>}/>
                     <Route element={<ProtectedRoute/>}>

@@ -8,12 +8,15 @@ const Dashboard = () => {
         navigate("/");
     };
 
+    const navigateToRegisterUser = () => {
+        navigate("/registeruser")
+    }
+
     return (
         <>
-            <a href="/registeruser">Register user</a>
+            <button onClick={navigateToRegisterUser}>Register user</button>
             <button onClick={handleLogout}>Log out</button>
         </>
-
     )
 };
 
