@@ -15,7 +15,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
+ * Testklass för AuthController som hanterar inloggning med tokens.
+ * Klassens testLoginAuthenticationToken() testar att autentiseringen fungerar korrekt
+ * och att endpointen returnerar HTTP 200 OK om rätt inloggningsuppgifter anges.
  *
+ * @SpringBootTest kör Spring-kontexten så beans laddas som vid riktig körning
+ * @AutoConfigureMockMvc gör det möjligt att testa kontrollers utan en riktig
+ * webbserver.
+ *
+ * Databasen rensas mellan varje test för att städa upp och säkerställa att tidigare test
+ * inte påverkar varandra.
  */
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -31,7 +40,10 @@ public class AuthControllerTest {
     private SecurityConfig securityConfig;
 
     /**
-     *
+     * Metoden förbereder testmiljön inför varje test.
+     * - Databasen rensas.
+     * - En testanvändare med krypterat lösenord skapas.
+     * - Sparar användaren i AppUserRepository så att endpointen har något att jobba med.
      */
     @BeforeEach
     public void setup() {
@@ -45,7 +57,11 @@ public class AuthControllerTest {
     }
 
     /**
-     * @throws Exception
+     * Metoden skickar en POST-request till endpointen /request-token
+     * Skapar ett JSON-objekt med samma uppgifter som testanvändaren.
+     * Kontrollerar att HTTP-status är samma som förväntat (200 OK)
+     * vilket innebär att autentiseringen har lyckats och JWT-token har returnerats.
+     * @throws Exception om något går fel.
      */
     @Test
     public void testLoginAuthenticationToken() throws Exception {
