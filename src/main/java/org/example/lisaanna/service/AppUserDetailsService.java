@@ -14,7 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Spring Security letar automatiskt efter en UserDetailsService, som implementeras i denna klassen,
+ * när den behöver autentisera användare. Eftersom klassen är annoterad med @Service kommer Spring
+ * att hitta den när den letar efter Beans.
  *
+ * UserDetailsService används automatiskt av Spring Security implicit, därför behöver man inte
+ * implementera klassinnehållet någon annanstans i kodbasen.
  */
 @Service
 public class AppUserDetailsService implements UserDetailsService {
@@ -28,9 +33,9 @@ public class AppUserDetailsService implements UserDetailsService {
     }
 
     /**
-     * @param username
-     * @return
-     * @throws UsernameNotFoundException
+     * @param username är användaren som behöver autentiseras
+     * @return en autentiserad användare returneras, om inte ett
+     * @throws UsernameNotFoundException kastas, när en användare inte hittas
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

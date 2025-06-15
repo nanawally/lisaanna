@@ -12,16 +12,11 @@ import java.time.temporal.ChronoUnit;
 import java.util.stream.Collectors;
 
 /**
- *
+ * Den här klassen tar emot en autentiserad användare, skapar sedan en JWT-token med information
+ * om användaren, och returnerar sedan tokenen som en string
  */
 @Service
 public class TokenService {
-
-    /*
-    Ta emot en autentiserad användare
-    Skapa en JWT-token med information om användaren
-    Returnera token som sträng
-    */
 
     private JwtEncoder jwtEncoder;
 
@@ -30,8 +25,10 @@ public class TokenService {
     }
 
     /**
-     * @param auth
-     * @return
+     * @param auth är av typen Authentication, som är ett inbyggt interface i Spring Security.
+     * Metoden tar in ett Authenticationobjekt som redan ska vara autentiserad från ett annat ställe
+     * i kodbasen.
+     * @return en token som en sträng
      */
     public String generateToken(Authentication auth) {
         // referenspunkt för när token skapas

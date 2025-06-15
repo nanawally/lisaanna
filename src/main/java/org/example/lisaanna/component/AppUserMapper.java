@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 /**
  Mappers ingår i servicelagret i en applikation. I denna klass konverterar vi vår Entity (AppUser)
- till sitt DTO, eller tvärtom, innan datan sparas eller bearbetas vidare.
+ till sin DTO-motsvarighet, eller tvärtom, innan datan sparas eller bearbetas vidare.
  */
 @Component
 public class AppUserMapper {
