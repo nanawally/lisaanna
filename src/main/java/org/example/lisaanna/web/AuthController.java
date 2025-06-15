@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
+ * Den här klassen genererar signerade JWT tokens baserade på autentiserad användarinformation.
  */
 @RestController
 @RequestMapping("/request-token")
@@ -26,8 +26,10 @@ public class AuthController {
     }
 
     /**
-     * @param loginRequest
-     * @return
+     * @param loginRequest en POST-request skickas in och mappas till ett LoginRequestobjekt.
+     * en Authentication token skapas och skickas till authenticationManager. generateToken() tar
+     * den informationen och skapar en token
+     * @return en signerad token returneras
      */
     @PostMapping
     public ResponseEntity<String> token(@RequestBody LoginRequest loginRequest) {

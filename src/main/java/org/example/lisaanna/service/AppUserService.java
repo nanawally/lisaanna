@@ -13,7 +13,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 /**
- *
+ * Den här klassen interagerar med databaslagret, mappar DTOn till entiteter, och sköter viss
+ * loggning. Majoriteten av klassen består av metoder som motsvarar CRUD-operationer.
  */
 @Service
 public class AppUserService {
@@ -23,7 +24,7 @@ public class AppUserService {
     private static final Logger logger = LoggerFactory.getLogger(AppUserService.class);
 
     /**
-     *
+     * Kör loggning för debugging och liknande
      */
     public void run() {
         logger.info("Starting logger");
@@ -42,22 +43,23 @@ public class AppUserService {
     }
 
     /**
-     * @return
+     * @return en lista över alla objekt i databasen
      */
     public List<AppUser> getAppUserList() {
         return appUserRepository.findAll();
     }
 
     /**
-     * @param username
-     * @return
+     * @param username användarnamnet som tillhör databasobjektet som ska hittas
+     * @return användaren i databasen som matchar användarnamnet
      */
     public AppUser getAppUserByUsername(String username) {
         return appUserRepository.findByUsername(username);
     }
 
     /**
-     * @param appUserDTO
+     * @param appUserDTO DTO-versionen av användarna i databasen. Användare som valideras genom DTOn
+     * sparas sedan i databasen.
      */
     public void saveUser(AppUserDTO appUserDTO) {
         AppUser appUser = appUserMapper.toAppUser(appUserDTO);
@@ -65,7 +67,7 @@ public class AppUserService {
     }
 
     /**
-     * @param id
+     * @param id metoden tar in IDt på användaren som ska tas bort från databasen och utför operationen.
      */
     public void deleteUser(Long id) {
         AppUser user = appUserRepository.findById(id).orElseThrow(() -> new UserNotFoundException("No user with " + id + " found"));

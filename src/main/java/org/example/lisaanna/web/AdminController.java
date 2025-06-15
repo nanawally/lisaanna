@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- *
+ * FATE TO BE DECIDED
  */
 @RestController
 @RequestMapping("/admin")

@@ -1,18 +1,10 @@
 package org.example.lisaanna.web;
 
 /**
- * records –
- * ett nytt sätt att skapa oföränderliga (immutable) datastrukturer med minimal kod.
- * Detta skapar automatiskt:
- * en klass LoginRequest
- * två final fält: username och password
- * en konstruktor
- * get -metoder ( username() , password() )
- * toString() , equals() , och hashCode()
- * LoginRequest används när klienten skickar användarnamn och lösenord med en POST-
- * request till applikationen i syfte att få tillbaka en jwt-token
- * @param username
- * @param password
+ * Den här klassen innehåller endast en record, som är en typ av immutable datastruktur.
+ * En record skapar automatiskt en klass (LoginRequest), två final fält (username och password), en
+ * konstruktor, get-metoder, samt toString(), equals(), och hashCode().
+ * Den används när en POST-request skickas till applikationen för att få tillbaka en JWT-token.
  */
 public record LoginRequest(String username, String password) {
 }

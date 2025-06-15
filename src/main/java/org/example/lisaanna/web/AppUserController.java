@@ -12,7 +12,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
- *
+ * Den är klassen ansvarar för att kommunicera med applikationens frontend, genom att agera som en
+ * middle man mellan servicelagret, som innehåller logik, och frontend.
+ * Den här klassen tar in HTTP requests från frontend och mappar dem till metoder (GET, POST, DELETE).
+ * Därefter kallar den på servicelagret för att utföra operationerna, och returnerar till sist HTTP-
+ * responses med statuskoder osv tillbaka till frontend.
  */
 @RestController
 @RequestMapping("/user")
@@ -25,7 +29,7 @@ public class AppUserController {
     }
 
     /**
-     * @return
+     * @return en HTTP status returneras tillsammans med en lista över alla användare
      */
     @GetMapping
     public ResponseEntity<List<AppUser>> getAllUsers() {
@@ -33,8 +37,9 @@ public class AppUserController {
     }
 
     /**
-     * @param username
-     * @return
+     * @param username tas in för att skickas vidare och sökas efter i listan över AppUsers.
+     * @return en HTTP status returneras tillsammans med resten av datan som hittades med
+     * användarnamnet.
      */
     @GetMapping("/{username}")
     public ResponseEntity<AppUser> getUserByUsername(@PathVariable String username) {
@@ -46,8 +51,9 @@ public class AppUserController {
     }
 
     /**
-     * @param appUserDTO
-     * @return
+     * @param appUserDTO tas in för att säkerställa att fält som username, password osv redan har
+     * blivit validerade innan de skickas till servicelagret för att sparas.
+     * @return en HTTP status returneras tillsammans med användardata i DTO-format
      */
     @PostMapping
     public ResponseEntity<AppUserDTO> addUser(@Valid @RequestBody AppUserDTO appUserDTO) {
@@ -60,8 +66,8 @@ public class AppUserController {
 
 
     /**
-     * @param id
-     * @return
+     * @param id tas in för att skickas vidare till servicelagret, där en användare med IDt tas bort.
+     * @return en HTTP status returneras
      */
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {

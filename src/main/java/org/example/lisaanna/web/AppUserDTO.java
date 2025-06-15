@@ -5,14 +5,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 /**
- * I större applikationer bör vi inte använda domänklassen ( Person ) direkt i webbskiktet.
-Istället skapar vi en särskild DTO-klass (Data Transfer Object) som används för formuläret:
- Att använda DTO-objekt har flera fördelar:
- Vi separerar webblagret från domänlogiken
- Vi undviker att exponera hela vår modellklass i onödan
- Vi får bättre kontroll över vilka fält som tas emot
- Vi kan ha olika DTO:er för olika syften (inmatning, visning, uppdatering)
- Vi kan lägga till validering specifikt för inmatningsdata
+ * För att undvika att använda domänklassen (AppUser) direkt i weblagret används den här DTO-klassen.
+ * Utöver att separera weblagret som mer intern logik ger klassen oss bättre kontroll över vilka
+ * fält som tas emot. Den sköter också valideringen av dessa fält.
  */
 public class AppUserDTO {
 

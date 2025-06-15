@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 /**
  *
  */
-// mappar nu till /login -> ska mappa till loginForm eller loginResult???????
+// gammal klass från innan JWT och frontend började användas
 /*
 @Controller
 @RequestMapping("/login")
