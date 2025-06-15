@@ -22,7 +22,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * @SpringBootTest kör Spring-kontexten så beans laddas som vid riktig körning
  * @AutoConfigureMockMvc gör det möjligt att testa kontrollers utan en riktig
  * webbserver.
- *
+ * <p>
  * Databasen rensas mellan varje test för att städa upp och säkerställa att tidigare test
  * inte påverkar varandra.
  */
@@ -61,6 +61,7 @@ public class AuthControllerTest {
      * Skapar ett JSON-objekt med samma uppgifter som testanvändaren.
      * Kontrollerar att HTTP-status är samma som förväntat (200 OK)
      * vilket innebär att autentiseringen har lyckats och JWT-token har returnerats.
+     *
      * @throws Exception om något går fel.
      */
     @Test

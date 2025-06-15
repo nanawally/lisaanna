@@ -26,8 +26,6 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -38,12 +36,24 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- *
+ * Klassen innehåller mycket boilerplate-kod eftersom den skapar upp instanser av olika klasser och interfaces
+ * som finns tillgängliga i Spring Security, t.ex.
+ * nyckelpar, encoder och decoders.
+ * Klassen innehåller konfigurationer kring åtkomst etc och sätter regler för säkerhet och autentisering.
  */
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
+    /**
+     * Säkerhets-filterkedja som styr vilka sidor som kräver inloggning.
+     * Stänger av CSRF för att kunna använda JWT-tokens.
+     * Sessionshantering för att undvika att spara autentiseringsinformation,
+     * istället måste en ny request göras varje gång.
+     * @param http används för att komma åt metoderna som kallas på i filterkedjan.
+     * @return HttpSecurity-objekt med alla konfigurationer inuti.
+     * @throws Exception om något skulle gå fel.
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -75,7 +85,9 @@ public class SecurityConfig {
     }
 
     /**
-     * @return
+     * Använder BCrypt-algoritmen för att ange hur lösenord ska hashas.
+     *
+     * @return en instans av BCryptPasswordEncoder.
      */
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -83,10 +95,15 @@ public class SecurityConfig {
     }
 
     /**
-     * genererar ett publikt + privat RSA-nyckelpar
+     * Genererar ett publikt och privat RSA-nyckelpar.
+     * Privata nyckeln signerar eller dekrypterar.
+     * Publika nyckeln verifierar eller krypterar.
+     * Använder en asymmetrisk krypteringsalgoritm som kopplar nycklarna.
+     * I Spring Security signeras JWT med den privata nyckeln,
+     * och verifieras med den publika nyckeln.
      *
-     * @return
-     * @throws NoSuchAlgorithmException
+     * @return ett RSA-nyckelpar
+     * @throws NoSuchAlgorithmException om algoritmen inte är tillgänglig i kontexten.
      */
     @Bean
     public KeyPair keyPair() throws NoSuchAlgorithmException {
@@ -96,11 +113,11 @@ public class SecurityConfig {
     }
 
     /**
-     * bygger JSON Web Kay-format utifrån nyckelparet
-     * transformerar nyckelparet till formatet som krävs för att encode jwt-tokens
+     * Metoden bygger ett JSON Web Key-format utifrån nyckelparet som genererats.
+     * Nyckelparet omformateras till JWKSet som krävs för att encoda JWT-tokens.
      *
-     * @param keyPair
-     * @return
+     * @param keyPair, som skapades i keyPair(), injeceras automatiskt av Spring
+     * @return ett objekt av typen JWKSource som används för att signera och verifiera JWT-tokens.
      */
     @Bean
     public JWKSource<SecurityContext> jwkSource(KeyPair keyPair) {
@@ -113,11 +130,11 @@ public class SecurityConfig {
     }
 
     /**
-     * signerar en JWT
-     * använder JWKSource för att skapa encodern
+     * Metoden används för att signera en JWT.
+     * JWKSource-beanen används för att skapa encodern.
      *
-     * @param jwkSource
-     * @return
+     * @param jwkSource, som skapades i jwkSource(), injeceras automatiskt av Spring
+     * @return en encoder för specifikt JWT-tokens.
      */
     @Bean
     public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
@@ -125,11 +142,13 @@ public class SecurityConfig {
     }
 
     /**
-     * läser och verifierar en JWT
-     * använder KeyPair för att skapa decodern
+     * Metoden används för att läsa av och verifiera en JWT.
+     * Den tidigare beanen använder automatiskt det KeyPair-paret som skapades,
+     * för att göra en encoder.
+     * Denna metod använder samma KeyPair-par för att skapa en decoder.
      *
-     * @param keyPair
-     * @return
+     * @param keyPair, som skapades i keyPair(), injeceras automatiskt av Spring
+     * @return en decoder för specifikt JWT-tokens.
      */
     @Bean
     public JwtDecoder jwtDecoder(KeyPair keyPair) {
@@ -137,11 +156,14 @@ public class SecurityConfig {
     }
 
     /**
-     * autentiserar användare vid inloggning
+     * Metoden skapar och konfigurerar en AuthenticationManager
+     * som ansvarar för att autentisera användare vid inloggning.
+     * Skapar DaoAuthenticationProvider som är en implementering av AuthenticationProvider.
+     * Den kopplar sedan in parametrarna i den.
      *
-     * @param userDetailsService
-     * @param passwordEncoder
-     * @return
+     * @param userDetailsService för att hämta användarinformation
+     * @param passwordEncoder för att jämföra lösenord
+     * @return ett Authentication-objekt som är autentiserat
      */
     @Bean
     public AuthenticationManager authenticationManager(
@@ -155,9 +177,12 @@ public class SecurityConfig {
     }
 
     /**
-     * Översätter token:s claims till roller
+     * Metoden kontrollerar vilken token som kommer in
+     * och returnerar olika roller beroende på token:en.
+     * Dessa används i Spring Security för att styra åtkomst.
      *
-     * @return
+     * @return en instans av JwtAuthenticationConverter som innehåller den
+     * angivna konfigurationen.
      */
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
@@ -171,27 +196,9 @@ public class SecurityConfig {
     }
 
     /**
-     * @return
-     */
-    /*@Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**") // Tillåter alla endpoints
-                        .allowedOrigins("http://localhost:5173") // Anpassa efter frontendens URL
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // Tillåtna HTTP-metoder
-                        .allowedHeaders("*") // Tillåter alla headers
-                        .allowCredentials(true);
-            }
-        };
-    }*/
-
-
-    /**
      * Definierar CORS-konfigurationen som en @Bean
      * Konfigurerar CORS för applikationen och tillåter HTTP-förfrågningar
-     * från frontend "<a href="http://localhost:5173">...</a>"
+     * från frontend "href="http://localhost:5173">"
      * Alla headers tillåts
      * JWT-token i Authorization-headern kan skickas
      * JWT-token exponeras för att klienten ska kunna läsa token från svaret

@@ -29,7 +29,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
  * Testklass för AppUserController. Klassen testar metoderna addUser() och deleteUser().
  *
  * Klassen använder MockMvc och Spring Boot Test för att bygga en mockad testmiljö.
- * För att kunna genomföra testen så måste en admin-användare skapas för att generera en
+ * För att kunna genomföra testen så måste en test-användare skapas för att generera en
  * JWT-token, som sedan används vid autentisering av HTTP-anropen.
  *
  * Databasen rensas mellan varje test för att städa upp och säkerställa att tidigare test
@@ -62,7 +62,7 @@ public class AppUserControllerTest {
         // rensa databasen mellan testerna
         appUserRepository.deleteAll();
 
-        // skapa test-admin för att generera en token
+        // skapa test-användare för att generera en token
         AppUser user = new AppUser();
         user.setUsername("admin");
         user.setPassword(securityConfig.passwordEncoder().encode("AdminPass12!!"));

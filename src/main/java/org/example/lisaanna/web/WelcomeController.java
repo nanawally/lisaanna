@@ -1,6 +1,6 @@
-package org.example.lisaanna.web;
+//package org.example.lisaanna.web;
 
-import org.example.lisaanna.repository.AppUserRepository;
+/*import org.example.lisaanna.repository.AppUserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * FATE TO BE DECIDED
  */
-@RestController
+/*@RestController
 @RequestMapping("/")
 public class WelcomeController {
 
@@ -21,13 +21,11 @@ public class WelcomeController {
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * @return
-     */
+
     @GetMapping
     public String index() {
         return "index";
     }
 
 
-}
+}*/
