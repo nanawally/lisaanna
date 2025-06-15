@@ -47,7 +47,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Aktivera CORS med din konfiguration
+                // Aktivera CORS
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 // Inaktivera CSRF
                 .csrf(csrf -> csrf.disable())
@@ -83,10 +83,11 @@ public class SecurityConfig {
     }
 
     /**
+     * genererar ett publikt + privat RSA-nyckelpar
+     *
      * @return
      * @throws NoSuchAlgorithmException
      */
-    // genererar ett publikt + privat RSA-nyckelpar
     @Bean
     public KeyPair keyPair() throws NoSuchAlgorithmException {
         KeyPairGenerator generator = KeyPairGenerator.getInstance("RSA");
@@ -95,11 +96,12 @@ public class SecurityConfig {
     }
 
     /**
+     * bygger JSON Web Kay-format utifrån nyckelparet
+     * transformerar nyckelparet till formatet som krävs för att encode jwt-tokens
+     *
      * @param keyPair
      * @return
      */
-    // bygger JSON Web Kay-format utifrån nyckelparet
-    // transformerar nyckelparet till formatet som krävs för att encode jwt-tokens
     @Bean
     public JWKSource<SecurityContext> jwkSource(KeyPair keyPair) {
         RSAKey rsaKey = new RSAKey.Builder((RSAPublicKey) keyPair.getPublic())
@@ -111,33 +113,36 @@ public class SecurityConfig {
     }
 
     /**
+     * signerar en JWT
+     * använder JWKSource för att skapa encodern
+     *
      * @param jwkSource
      * @return
      */
-    // signerar en JWT
-    // använder JWKSource för att skapa encodern
     @Bean
     public JwtEncoder jwtEncoder(JWKSource<SecurityContext> jwkSource) {
         return new NimbusJwtEncoder(jwkSource);
     }
 
     /**
+     * läser och verifierar en JWT
+     * använder KeyPair för att skapa decodern
+     *
      * @param keyPair
      * @return
      */
-    // läser och verifierar en JWT
-    // använder KeyPair för att skapa decodern
     @Bean
     public JwtDecoder jwtDecoder(KeyPair keyPair) {
         return NimbusJwtDecoder.withPublicKey((RSAPublicKey) keyPair.getPublic()).build();
     }
 
     /**
+     * autentiserar användare vid inloggning
+     *
      * @param userDetailsService
      * @param passwordEncoder
      * @return
      */
-    // autentiserar användare vid inloggning
     @Bean
     public AuthenticationManager authenticationManager(
             UserDetailsService userDetailsService,
@@ -150,9 +155,10 @@ public class SecurityConfig {
     }
 
     /**
+     * Översätter token:s claims till roller
+     *
      * @return
      */
-    // översätter token:s claims till roller
     @Bean
     public JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
@@ -182,16 +188,34 @@ public class SecurityConfig {
     }*/
 
 
+    /**
+     * Definierar CORS-konfigurationen som en @Bean
+     * Konfigurerar CORS för applikationen och tillåter HTTP-förfrågningar
+     * från frontend "<a href="http://localhost:5173">...</a>"
+     * Alla headers tillåts
+     * JWT-token i Authorization-headern kan skickas
+     * JWT-token exponeras för att klienten ska kunna läsa token från svaret
+     *
+     * @return en CorsConfigurationSource som en @Bean, som Spring Security använder
+     * i CORS-hanteringen
+     */
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
+        // skapar ett tomt CORS-konfigurationsobjekt
         CorsConfiguration configuration = new CorsConfiguration();
+        // tillåter endast requests från localhost:5173
         configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        // tillåtna HTTP-metoder
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        // tillåter alla headers
         configuration.setAllowedHeaders(List.of("*"));
+        // tillåter autentisering med token
         configuration.setAllowCredentials(true);
-        configuration.setExposedHeaders(List.of("Authorization")); // Viktigt för JWT
+        // klienten kan läsa Authorization-headern
+        configuration.setExposedHeaders(List.of("Authorization"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        // kopplar reglerna från ovan till alla endpoints
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
